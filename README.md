@@ -44,4 +44,21 @@ ls certbot/conf/live/working-shop.chickenkiller.com/
 
 8. Last step is replace the content of nginx.conf file with final_nignx.conf file (IMP DONT CHANGE THE NAME OF THE FILE - SHOULD BE ONLY nginx.conf)
 
+Now Run -> 
+docker run -d --name nginx \
+  -p 80:80 -p 443:443 \
+  -v $(pwd)/nginx/nginx.conf:/etc/nginx/nginx.conf:ro \
+  -v $(pwd)/nginx/html:/usr/share/nginx/html \
+  -v $(pwd)/certbot/www:/var/www/certbot \
+  -v $(pwd)/certbot/conf:/etc/letsencrypt:ro \
+  nginx:alpine
+
+above command will not works as -
+Adds -p 443:443 so HTTPS is reachable.
+​
+
+Adds -v $(pwd)/certbot/conf:/etc/letsencrypt:ro so inside the container the certs exist at /etc/letsencrypt/live/working-shop.chickenkiller.com/..., matching your nginx.conf.
+​
+
+That extra -v .../certbot/conf:/etc/letsencrypt:ro is what fixes the cannot load certificate error.
 
