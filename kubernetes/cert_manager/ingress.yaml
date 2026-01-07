@@ -1,0 +1,24 @@
+# demo-ingress.yaml
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: demo-app-ingress
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-staging
+spec:
+  ingressClassName: nginx
+  tls:
+  - hosts:
+    - working-shop.chickenkiller.com	
+    secretName: demo-app-tls
+  rules:
+  - host: working-shop.chickenkiller.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: demo-app
+            port:
+              number: 80

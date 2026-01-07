@@ -1,0 +1,1 @@
+Run PowerShell as Administrator: takeown /F "$env:USERPROFILE\.ssh\config" then icacls "$env:USERPROFILE\.ssh\config" /grant "${env:USERNAME}:F" /inheritance:r. This recursively sets full control for you only
